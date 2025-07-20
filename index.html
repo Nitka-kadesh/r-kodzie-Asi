@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rękodzieło z Pasją</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fdfaf6;
+        color: #333;
+      }
+
+      header {
+        background-color: #d9cbb3;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2em;
+        color: #4a3f35;
+      }
+
+      nav a {
+        margin: 0 15px;
+        text-decoration: none;
+        color: #4a3f35;
+        font-weight: bold;
+      }
+
+      .cart-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #4a3f35;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .banner {
+        background-image: url("https://via.placeholder.com/1200x400?text=Unikalne+Rekodzielo");
+        background-size: cover;
+        background-position: center;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        font-size: 2em;
+      }
+
+      .products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 40px 20px;
+      }
+
+      .product {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .product img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .product h3 {
+        margin: 15px 0 10px;
+      }
+
+      .product button {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background-color: #4a3f35;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .about {
+        padding: 40px 20px;
+        background-color: #f0ebe1;
+        text-align: center;
+      }
+
+      .about h2 {
+        margin-bottom: 15px;
+      }
+
+      footer {
+        background-color: #d9cbb3;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9em;
+      }
+
+      .cart-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .cart-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        max-height: 80%;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .cart-content h2 {
+        margin-top: 0;
+      }
+
+      .cart-item {
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0;
+      }
+
+      .cart-item button {
+        background: none;
+        border: none;
+        color: red;
+        cursor: pointer;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.2em;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        .products {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Rękodzieło z Pasją</h1>
+      <nav>
+        <a href="#">Strona główna</a>
+        <a href="#">Sklep</a>
+        <a href="#">O nas</a>
+        <a href="#">Kontakt</a>
+      </nav>
+      <button class="cart-btn" onclick="toggleCart()">
+        🛒 Koszyk (<span id="cart-count">0</span>)
+      </button>
+    </header>
+
+    <section class="banner">Unikalne rękodzieło tworzone z sercem</section>
+
+    <section class="products">
+      <div class="product">
+        <img
+          src="https://via.placeholder.com/300x200?text=Produkt+1"
+          alt="Bransoletka boho"
+        />
+        <h3>Bransoletka boho</h3>
+        <p>Ręcznie wykonana z naturalnych kamieni.</p>
+        <strong>49 zł</strong><br />
+        <button onclick="addToCart('Bransoletka boho', 49)">
+          Dodaj do koszyka
+        </button>
+      </div>
+
+      <div class="product">
+        <img
+          src="https://via.placeholder.com/300x200?text=Produkt+2"
+          alt="Świeca sojowa"
+        />
+        <h3>Świeca sojowa</h3>
+        <p>Naturalna, pachnąca lawendą, w szklanym słoiczku.</p>
+        <strong>35 zł</strong><br />
+        <button onclick="addToCart('Świeca sojowa', 35)">
+          Dodaj do koszyka
+        </button>
+      </div>
+
+      <div class="product">
+        <img
+          src="https://via.placeholder.com/300x200?text=Produkt+3"
+          alt="Makrama"
+        />
+        <h3>Makrama na ścianę</h3>
+        <p>Piękna dekoracja z bawełnianego sznurka.</p>
+        <strong>89 zł</strong><br />
+        <button onclick="addToCart('Makrama na ścianę', 89)">
+          Dodaj do koszyka
+        </button>
+      </div>
+    </section>
+
+    <section class="about">
+      <h2>O nas</h2>
+      <p>
+        Witamy w sklepie <strong>Rękodzieło z Pasją</strong> – miejscu, gdzie
+        każdy produkt powstaje z sercem, cierpliwością i miłością do detalu.
+        Nasze prace to nie tylko dekoracje czy dodatki – to małe dzieła sztuki,
+        które niosą ze sobą historię i duszę twórcy.
+      </p>
+      <p>
+        Stawiamy na jakość, naturalne materiały i unikalność. Nie znajdziesz u
+        nas masowej produkcji – każdy egzemplarz jest wyjątkowy. Tworzymy z
+        myślą o ludziach, którzy cenią autentyczność, piękno i rzemiosło.
+      </p>
+      <p>
+        Dziękujemy, że jesteś tutaj. Mamy nadzieję, że nasze rękodzieło wniesie
+        odrobinę ciepła do Twojego domu lub stanie się wyjątkowym prezentem dla
+        bliskiej osoby.
+      </p>
+    </section>
+
+    <footer>© 2025 Rękodzieło z Pasją | kontakt@rekodzielo.pl</footer>
+
+    <div class="cart-modal" id="cartModal">
+      <div class="cart-content">
+        <button class="close-btn" onclick="toggleCart()">✖</button>
+        <h2>Twój koszyk</h2>
+        <div id="cart-items"></div>
+        <p>
+          <strong>Suma: <span id="cart-total">0</span> zł</strong>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      let cart = [];
+
+      function addToCart(product, price) {
+        cart.push({ product, price });
+        updateCart();
+        alert(`Dodano "${product}" do koszyka!`);
+      }
+
+      function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCart();
+      }
+
+      function updateCart() {
+        const cartCount = document.getElementById("cart-count");
+        const cartItems = document.getElementById("cart-items");
+        const cartTotal = document.getElementById("cart-total");
+
+        cartCount.textContent = cart.length;
+        cartItems.innerHTML = "";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+          total += item.price;
+          cartItems.innerHTML += `
+        <div class="cart-item">
+          ${item.product} - ${item.price} zł
+          <button onclick="removeFromCart(${index})">Usuń</button>
+        </div>
+      `;
+        });
+
+        cartTotal.textContent = total.toFixed(2);
+      }
+
+      function toggleCart() {
+        const modal = document.getElementById("cartModal");
+        modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+      }
+    </script>
+  </body>
+</html>
+// ...existing code... function toggleCart() { const modal =
+document.getElementById("cartModal"); modal.style.display = modal.style.display
+=== "flex" ? "none" : "flex"; } // Zamknij modal po kliknięciu poza oknem
+koszyka document.getElementById("cartModal").addEventListener("click", function
+(e) { if (e.target === this) { toggleCart(); } }); // ...existing code...
